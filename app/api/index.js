@@ -41,10 +41,8 @@ app.use(
 app.use('/api', require('./routes'));
 
 // 404 handler
-app.all('*', (req, res, next) => {
-  next(
-    new AppError(`Can't find ${req.originalUrl} on this server!`, 404)
-  );
+app.all('*', (req, res) => {
+  res.status(404).json({ message: `Can't find ${req.originalUrl} on this server!` });
 });
 
 //port
