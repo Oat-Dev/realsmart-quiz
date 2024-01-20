@@ -58,26 +58,6 @@ module.exports = class User {
     }
   }
 
-  static async apiGetUserById(req, res, next) {
-    try {
-      let id = req.params.id;
-      if (!id) {
-        return res.status(400).json({ message: "No user ID provided" });
-      }
-
-      const user = await UserService.getUserbyId(id);
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-
-      return res.status(200).json(user);
-    } catch (error) {
-      res.status(500).json({
-        error: error,
-      });
-    }
-  }
-
   static async apiUpdateUser(req, res, next) {
     try {
       const userId = req.params.id;

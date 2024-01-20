@@ -90,19 +90,6 @@ module.exports = class UserService {
     }
   }
 
-  static async getUserbyId(UserId) {
-    try {
-      const user = await User.findById(UserId);
-      return user;
-    } catch (error) {
-      console.error(`User not found: ${error}`);
-      return {
-        status: 500,
-        message: `User not found: ${error}`,
-      };
-    }
-  }
-
   static async changePassword(UserId, data) {
     try {
       const user = await User.findById(UserId);

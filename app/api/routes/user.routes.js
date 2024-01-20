@@ -4,10 +4,10 @@ const authenticateToken = require('../helper/authenticateToken');
 
 const router = express.Router();
 
+
 //get medthod
 router.post("/login", userCtrl.apiLogin);
 router.get('/getAll', authenticateToken, userCtrl.apiGetAllUser);
-router.get("/:id", userCtrl.apiGetUserById);
 
 //post medthod
 router.post("/createUser", userCtrl.apiCreateUser);
