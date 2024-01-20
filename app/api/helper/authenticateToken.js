@@ -1,10 +1,13 @@
-const jwt = require('jsonwebtoken');
-
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
 
-  if (token == null) {
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ status: 401, message: "Unauthorized Token" });
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  if (!token) {
     return res.status(401).json({ status: 401, message: "Unauthorized Token" });
   }
 
@@ -16,5 +19,3 @@ const authenticateToken = (req, res, next) => {
     next();
   });
 };
-
-module.exports = authenticateToken;
