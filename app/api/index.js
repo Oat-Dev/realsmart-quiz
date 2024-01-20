@@ -39,6 +39,13 @@ app.use(
 // api
 app.use('/api', require('./routes'));
 
+// 404 handler
+app.all('*', (req, res, next) => {
+  next(
+    new AppError(`Can't find ${req.originalUrl} on this server!`, 404)
+  );
+});
+
 //port
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, console.log("Server is start for port: " + PORT + " 🚀"));

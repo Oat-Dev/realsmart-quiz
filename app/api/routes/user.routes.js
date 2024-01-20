@@ -1,8 +1,8 @@
 const express = require('express');
-const router = express.Router();
 const userCtrl = require("../controllers/user.controller");
 const authenticateToken = require('../helper/authenticateToken');
 
+const router = express.Router();
 
 //get medthod
 router.post("/login", userCtrl.apiLogin);
