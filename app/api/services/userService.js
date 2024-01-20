@@ -1,17 +1,18 @@
 const User = require("../models/user.js");
 const jwt = require("jsonwebtoken");
+const validator = require("validator");
 
 module.exports = class UserService {
   static async getAllUser() {
     try {
-      const allUser = await User.findAll();
+      const allUser = await User.find();
       return allUser;
     } catch (error) {
       console.error(`Could not fetch users: ${error}`);
     }
   }
 
-  static async login(identifier, password) {
+  static async login(identifier, password, rememberMe) {
     try {
       if (!identifier || !password) {
         return {
@@ -19,26 +20,32 @@ module.exports = class UserService {
           message: "Please provide email/phone and password!",
         };
       }
+      console.log(password);
 
       const isEmail = validator.isEmail(identifier);
       const query = isEmail
         ? { email: identifier }
         : { phoneNumber: identifier };
 
-      const user = await User.findOne({ where: query });
+      console.log(query);
+      const UserLogin = await User.findOne(query).select("+password");
+      console.log(UserLogin);
 
-      if (!user || !(await user.correctPassword(password))) {
+      if (
+        !UserLogin ||
+        !(await UserLogin.correctPassword(password, UserLogin.password))
+      ) {
         return { status: 401, message: "Incorrect email/phone or password" };
       }
 
       const accessData = {
-        id: user.id,
-        userId: user.userId,
-        email: user.email,
-        phoneNumber: user.phoneNumber,
+        id: UserLogin._id,
+        username: UserLogin.username,
+        email: UserLogin.email,
+        phoneNumber: UserLogin.phoneNumber,
       };
 
-      const tokenDuration = user.rememberMe ? "6m" : "1m";
+      const tokenDuration = rememberMe ? "6m" : "1m";
       const token = jwt.sign(accessData, process.env.jwtSecretKey, {
         expiresIn: tokenDuration,
       });
@@ -47,7 +54,7 @@ module.exports = class UserService {
         status: 200,
         tokenType: "Bearer",
         token,
-        data: user,
+        data: UserLogin,
       };
     } catch (error) {
       console.error(`Error logging in user: ${error}`);
@@ -65,11 +72,18 @@ module.exports = class UserService {
         expiresIn: "1m",
       });
 
+      const accessData = {
+        id: newUser._id,
+        username: newUser.username,
+        email: newUser.email,
+        phoneNumber: newUser.phoneNumber,
+      };
+
       return {
         status: 201,
         tokenType: "Bearer",
         token,
-        data: newUser,
+        data: accessData,
       };
     } catch (error) {
       console.error(`Error creating user: ${error}`);
@@ -82,7 +96,7 @@ module.exports = class UserService {
 
   static async getUserbyId(UserId) {
     try {
-      const user = await User.findByPk(UserId);
+      const user = await User.findById(UserId);
       return user;
     } catch (error) {
       console.error(`User not found: ${error}`);
@@ -91,7 +105,7 @@ module.exports = class UserService {
 
   static async changePassword(UserId, data) {
     try {
-      const user = await User.findByPk(UserId);
+      const user = await User.findById(UserId);
       if (!user) {
         return { status: 400, message: "User is invalid" };
       }
@@ -112,8 +126,9 @@ module.exports = class UserService {
         tokenType: "Bearer",
         token: tokenJWT,
         data: {
-          id: user.id,
+          id: user._id,
           username: user.username,
+          phoneNumber: user.phoneNumber,
           email: user.email,
         },
       };
@@ -128,28 +143,24 @@ module.exports = class UserService {
 
   static async updateUserService(userId, updateFields) {
     try {
-      const [updated] = await User.update(updateFields, {
-        where: { id: userId },
-      });
-
-      if (updated) {
-        const updatedUser = await User.findByPk(userId);
-        return { status: 200, data: updatedUser };
-      }
-
-      throw new Error("User not found");
+      const updateResponse = await User.updateOne(
+        {
+          _id: userId,
+        },
+        {
+          $set: updateFields,
+        }
+      );
+      return updateResponse;
     } catch (error) {
       console.error(`Could not update user: ${error}`);
-      return {
-        status: 500,
-        message: `Error updating user: ${error}`,
-      };
+      throw error;
     }
   }
 
   static async deleteUserService(userId) {
     try {
-      const deleted = await User.destroy({ where: { id: userId } });
+      const deleted = await User.deleteOne({ where: { id: userId } });
 
       if (deleted) {
         return { status: 200, message: "User deleted successfully" };

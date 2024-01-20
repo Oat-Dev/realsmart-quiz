@@ -4,12 +4,13 @@ const UserService = require("../services/userService");
 module.exports = class User {
   static async apiLogin(req, res) {
     const { identifier, password } = req.body;
+    const rememberMe = req.body.rememberMe ? req.body.rememberMe : false;
     console.log("Login request for:", identifier);
 
     try {
-      const users = await UserService.login(identifier, password);
+      const users = await UserService.login(identifier, password, rememberMe);
       console.log(users);
-      res.status(users.status).json({ message: users });
+      res.status(users.status).json(users);
     } catch (error) {
       res.status(500).json({
         error: error.message,
@@ -22,7 +23,8 @@ module.exports = class User {
       const users = await UserService.getAllUser();
 
       if (!users) {
-        res.status(404).json("There are no users published yet!");
+        res.status(404)
+          .json({ status: 404, message: "There are no users published yet!" });
       }
 
       res.status(200).json(users);
@@ -35,7 +37,7 @@ module.exports = class User {
   static async apiCreateUser(req, res) {
     try {
       const createUser = await UserService.createUsers(req.body);
-      res.status(users.status).json({ message: users.message });
+      res.status(createUser.status).json(createUser);
     } catch (error) {
       res.status(500).json({
         error: error,
