@@ -64,7 +64,7 @@ export default {
       console.log(token)
       try {
         await this.$axios
-          .get(`${process.env.baseUrl}/user/getAll`,{
+          .get(`/user/getAll`,{
         headers: {
           Authorization: `Bearer ${token}`,
         },
