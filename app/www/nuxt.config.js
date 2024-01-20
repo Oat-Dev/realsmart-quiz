@@ -52,10 +52,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL:
-      process.env.NODE_ENV !== "production"
-        ? `${process.env.VUE_APP_API}`
-        : `${process.env.VUE_APP_API}`,
+    baseURL: process.env.VUE_APP_API,
     credentials: true,
   },
 
@@ -81,7 +78,7 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
-  env: {
-    baseURL: process.env.VUE_APP_API,
-  },
+  // env: {
+  //   baseURL: process.env.VUE_APP_API,
+  // },
 };
