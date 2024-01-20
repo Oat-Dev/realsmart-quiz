@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const userCtrl = require("../controllers/user.controller");
+const authenticateToken = require('../helper/authenticateToken');
 
 
 //get medthod
 router.post("/login", userCtrl.apiLogin);
-router.get('/getAll', userCtrl.apiGetAllUser);
+router.get('/getAll', authenticateToken, userCtrl.apiGetAllUser);
 router.get("/:id", userCtrl.apiGetUserById);
 
 //post medthod
