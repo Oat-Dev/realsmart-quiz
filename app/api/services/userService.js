@@ -20,14 +20,12 @@ module.exports = class UserService {
           message: "Please provide email/phone and password!",
         };
       }
-      console.log(password);
 
       const isEmail = validator.isEmail(identifier);
       const query = isEmail
         ? { email: identifier }
         : { phoneNumber: identifier };
 
-      console.log(query);
       const UserLogin = await User.findOne(query).select("+password");
       console.log(UserLogin);
 

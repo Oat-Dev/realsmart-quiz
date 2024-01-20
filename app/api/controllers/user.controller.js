@@ -5,11 +5,8 @@ module.exports = class User {
   static async apiLogin(req, res) {
     const { identifier, password } = req.body;
     const rememberMe = req.body.rememberMe ? req.body.rememberMe : false;
-    console.log("Login request for:", identifier);
-
     try {
       const users = await UserService.login(identifier, password, rememberMe);
-      console.log(users);
       res.status(users.status).json(users);
     } catch (error) {
       res.status(500).json({
@@ -21,12 +18,11 @@ module.exports = class User {
   static async apiGetAllUser(req, res) {
     try {
       const users = await UserService.getAllUser();
-
       if (!users) {
-        res.status(404)
+        res
+          .status(404)
           .json({ status: 404, message: "There are no users published yet!" });
       }
-
       res.status(200).json(users);
     } catch (error) {
       res.status(500).json({
