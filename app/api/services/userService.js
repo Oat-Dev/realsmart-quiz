@@ -14,28 +14,35 @@ module.exports = class UserService {
   static async login(identifier, password) {
     try {
       if (!identifier || !password) {
-        return { status: 400, message: "Please provide email/phone and password!" };
+        return {
+          status: 400,
+          message: "Please provide email/phone and password!",
+        };
       }
-  
+
       const isEmail = validator.isEmail(identifier);
-      const query = isEmail ? { email: identifier } : { phoneNumber: identifier };
-  
+      const query = isEmail
+        ? { email: identifier }
+        : { phoneNumber: identifier };
+
       const user = await User.findOne({ where: query });
-  
+
       if (!user || !(await user.correctPassword(password))) {
         return { status: 401, message: "Incorrect email/phone or password" };
       }
-  
+
       const accessData = {
         id: user.id,
         userId: user.userId,
         email: user.email,
-        phoneNumber: user.phoneNumber
+        phoneNumber: user.phoneNumber,
       };
-  
+
       const tokenDuration = user.rememberMe ? "6m" : "1m";
-      const token = jwt.sign(accessData, process.env.jwtSecretKey, { expiresIn: tokenDuration });
-  
+      const token = jwt.sign(accessData, process.env.jwtSecretKey, {
+        expiresIn: tokenDuration,
+      });
+
       return {
         status: 200,
         tokenType: "Bearer",
@@ -50,7 +57,6 @@ module.exports = class UserService {
       };
     }
   }
-  
 
   static async createUsers(data) {
     try {
