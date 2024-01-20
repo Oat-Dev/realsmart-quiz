@@ -198,7 +198,7 @@ export default {
       if (this.$refs.form.validate() === true) {
         try {
           await this.$axios
-            .post(`${process.env.baseUrl}/user/login`, {
+            .post('/user/login', {
               identifier: this.email,
               password: this.password,
               rememberMe: this.rememberMe,
@@ -221,7 +221,7 @@ export default {
       if (this.$refs.form2.validate() === true) {
         try {
           await this.$axios
-            .post(`${process.env.baseUrl}/user/createUser`, {
+            .post('/user/createUser', {
               username: this.signUp.userName,
               email: this.signUp.email,
               phoneNumber: this.signUp.phoneNo,

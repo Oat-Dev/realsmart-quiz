@@ -51,13 +51,13 @@ export default {
   modules: ["@nuxtjs/axios"],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  // axios: {
-  //   baseURL:
-  //     process.env.NODE_ENV !== "production"
-  //       ? `${process.env.VUE_APP_API}`
-  //       : `${process.env.VUE_APP_API}`,
-  //   credentials: true,
-  // },
+  axios: {
+    baseURL:
+      process.env.NODE_ENV !== "production"
+        ? `${process.env.VUE_APP_API}`
+        : `${process.env.VUE_APP_API}`,
+    credentials: true,
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
