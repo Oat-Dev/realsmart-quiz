@@ -19,9 +19,7 @@ module.exports = class User {
     try {
       const users = await UserService.getAllUser();
       if (!users) {
-        res
-          .status(404)
-          .json({ status: 404, message: "There are no users published yet!" });
+        res.status(404).json({ status: 404, message: "There are no users published yet!" });
       }
       res.status(200).json(users);
     } catch (error) {
