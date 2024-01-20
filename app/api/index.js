@@ -37,7 +37,6 @@ app.use(
 );
 
 //router
-// app.set('view engine', 'ejs');
 app.use("/user", require("./routes/user.routes"));
 
 //port
