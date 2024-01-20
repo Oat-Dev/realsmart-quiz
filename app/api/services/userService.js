@@ -8,7 +8,10 @@ module.exports = class UserService {
       const allUser = await User.find();
       return allUser;
     } catch (error) {
-      console.error(`Could not fetch users: ${error}`);
+      return {
+        status: 500,
+        message: `Could not fetch users: ${error}`,
+      };
     }
   }
 
@@ -93,6 +96,10 @@ module.exports = class UserService {
       return user;
     } catch (error) {
       console.error(`User not found: ${error}`);
+      return {
+        status: 500,
+        message: `User not found: ${error}`,
+      };
     }
   }
 

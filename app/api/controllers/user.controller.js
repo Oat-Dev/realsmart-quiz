@@ -18,16 +18,19 @@ module.exports = class User {
   static async apiGetAllUser(req, res) {
     try {
       const users = await UserService.getAllUser();
-      if (!users) {
-        res.status(404).json({ status: 404, message: "There are no users published yet!" });
+      if (!users || users.length === 0) {
+        return res
+          .status(404)
+          .json({ status: 404, message: "There are no users published yet!" });
       }
-      res.status(200).json(users);
+      return res.status(200).json(users);
     } catch (error) {
       res.status(500).json({
         error: error,
       });
     }
   }
+
   static async apiCreateUser(req, res) {
     try {
       const createUser = await UserService.createUsers(req.body);
@@ -57,9 +60,17 @@ module.exports = class User {
 
   static async apiGetUserById(req, res, next) {
     try {
-      let id = req.params.id || {};
-      const UserId = await UserService.getUserbyId(id);
-      res.status(200).json(UserId);
+      let id = req.params.id;
+      if (!id) {
+        return res.status(400).json({ message: "No user ID provided" });
+      }
+
+      const user = await UserService.getUserbyId(id);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      return res.status(200).json(user);
     } catch (error) {
       res.status(500).json({
         error: error,
