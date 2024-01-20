@@ -3,6 +3,7 @@ const app = express();
 const dotenv = require("dotenv");
 const cors = require("cors");
 const mongoose = require("mongoose");
+dotenv.config();
 
 //config
 app.use(
@@ -14,7 +15,7 @@ app.use(
     ],
   })
 );
-dotenv.config();
+
 app.use(express.json());
 
 //mongodb connect
