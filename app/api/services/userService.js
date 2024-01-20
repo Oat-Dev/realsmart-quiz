@@ -66,9 +66,6 @@ module.exports = class UserService {
   static async createUsers(data) {
     try {
       const newUser = await User.create(data);
-      const token = jwt.sign({ id: newUser.id }, process.env.jwtSecretKey, {
-        expiresIn: "12h",
-      });
 
       const accessData = {
         id: newUser._id,
@@ -79,8 +76,6 @@ module.exports = class UserService {
 
       return {
         status: 201,
-        tokenType: "Bearer",
-        token,
         data: accessData,
       };
     } catch (error) {
