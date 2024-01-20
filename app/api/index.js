@@ -9,8 +9,8 @@ app.use(
   cors({
     credentials: true,
     origin: [
-      process.env.API_URL ? process.env.API_URL : "http://localhost:8000",
-      process.env.WWW_URL ? process.env.WWW_URL : "http://localhost:3000",
+      process.env.API_URL ? process.env.API_URL : "http://localhost:3000",
+      process.env.WWW_URL ? process.env.WWW_URL : "http://localhost:8080",
     ],
   })
 );

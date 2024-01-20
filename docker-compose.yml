@@ -24,7 +24,7 @@ services:
       context: ./app/api
       dockerfile: Dockerfile
     ports:
-      - 8000:8000
+      - 3000:3000
     volumes:
       - ./app/api/public:/usr/src/app/api/public
     networks:
@@ -38,13 +38,12 @@ services:
       context: ./app/www
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 8080:8080
     networks:
       - backend
     depends_on:
       - api
     working_dir: /usr/src/app/www
-    # command: 'yarn start'
     
 networks:
   backend:
