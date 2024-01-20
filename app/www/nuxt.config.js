@@ -82,6 +82,6 @@ export default {
   build: {},
 
   env: {
-    baseUrl: process.env.VUE_APP_API,
+    baseURL: process.env.VUE_APP_API,
   },
 };

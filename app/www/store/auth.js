@@ -17,7 +17,7 @@ export const state = () => ({
   export const actions = {
     async login({ commit }, credentials) {
       try {
-        const response = await this.$axios.post(`${process.env.baseUrl}/user/login` , credentials);
+        const response = await this.$axios.post(`${process.env.baseURL}/user/login` , credentials);
         const token = response.data.token;
         commit('SET_TOKEN', token);
       } catch (error) {
