@@ -5,28 +5,18 @@
   Fast, unopinionated, minimalist web framework for [Node.js](http://nodejs.org).
 
 ## Description
-This REST API is designed for managing Shops and Banners within a system, utilizing a MariaDB database.
+This REST API and Vue.js is designed for quiz Real Smart a Mongodb database.
 
 ## Installation and Setup
 
-1. Install dependencies:
+1. Install API dependencies:
    ```bash
    $ npm install
    ```
 
 2. Create a `.env` file from the `.env.example`.
 
-3. Run MariaDB and phpMyAdmin using Docker:
-   ```bash
-   $ docker-compose up --build -d
-   ```
-
-4. Create database tables using Sequelize Migrate:
-   ```bash
-   $ npx sequelize-cli db:migrate
-   ```
-
-5. Start the API server:
+3. Start the API server:
    ```bash
    $ npm run dev # for development
    $ npm run start # for production
