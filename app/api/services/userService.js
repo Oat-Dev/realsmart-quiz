@@ -43,7 +43,7 @@ module.exports = class UserService {
         phoneNumber: UserLogin.phoneNumber,
       };
 
-      const tokenDuration = rememberMe ? "6m" : "1m";
+      const tokenDuration = rememberMe ? "7d" : "12h";
       const token = jwt.sign(accessData, process.env.jwtSecretKey, {
         expiresIn: tokenDuration,
       });
@@ -67,7 +67,7 @@ module.exports = class UserService {
     try {
       const newUser = await User.create(data);
       const token = jwt.sign({ id: newUser.id }, process.env.jwtSecretKey, {
-        expiresIn: "1m",
+        expiresIn: "12h",
       });
 
       const accessData = {
@@ -116,7 +116,7 @@ module.exports = class UserService {
       await user.save();
 
       const tokenJWT = jwt.sign({ id: user.id }, process.env.jwtSecretKey, {
-        expiresIn: "1m",
+        expiresIn: "12h",
       });
 
       return {

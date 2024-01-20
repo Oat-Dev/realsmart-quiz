@@ -7,7 +7,7 @@
     "dev": "nodemon index.js",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:prod": "NODE_ENV=production nodemon app.js"
+    "start:prod": "NODE_ENV=production node app.js"
   },
   "author": "Pitchayakorn Thonganan",
   "license": "ISC",
