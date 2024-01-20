@@ -17,16 +17,6 @@ app.use(
 dotenv.config();
 app.use(express.json());
 
-//config
-app.use(
-  cors({
-    credentials: true,
-    origin: ["http://localhost:8080", "http://localhost:3000"],
-  })
-);
-dotenv.config();
-app.use(express.json());
-
 //mongodb connect
 const database = process.env.MONGOLAB_URI;
 mongoose
