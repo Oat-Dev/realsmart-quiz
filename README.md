@@ -5,18 +5,20 @@
   Fast, unopinionated, minimalist web framework for [Node.js](http://nodejs.org).
 
 ## Description
-This REST API and Vue.js is designed for quiz Real Smart a Mongodb database.
+This REST API and Nuxt.js is designed for quiz Real Smart a Mongodb database.
 
-## Installation and Setup
+## Installation and Setup API and WWW
 
-1. Install API dependencies:
+1. Using Node version 16^
+
+2. Install dependencies:
    ```bash
    $ npm install
    ```
 
-2. Create a `.env` file from the `.env.example`.
+3. Create a `.env` file from the `.env.example`.
 
-3. Start the API server:
+4. Start the server:
    ```bash
    $ npm run dev # for development
    $ npm run start # for production
@@ -28,7 +30,6 @@ This REST API and Vue.js is designed for quiz Real Smart a Mongodb database.
 
 - **POST `/user/login`**: Login user
 - **GET `/user/getAll`**: Retrieve all users
-- **GET `/user/:id`**: Retrieve a user by ID
 - **POST `/user/createUser`**: Create a new user
 - **POST `/user/changePassword/:id`**: Change a user's password
 - **PUT `/user/updateUser/:id`**: Update user details
