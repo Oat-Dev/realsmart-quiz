@@ -22,8 +22,15 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [false, "Please provide a password"],
-      minlength: 6,
+      minlength: 4,
+      maxlength: 60,
       select: false,
+      validate: {
+        validator: function (v) {
+          return /^(?=.*[a-z])(?=.*[A-Z])/.test(v);
+        },
+        message: "Password must contain both uppercase and lowercase letters",
+      },
     },
   },
   { timestamps: true }
